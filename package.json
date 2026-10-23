@@ -1,0 +1,91 @@
+{
+  "name": "phone-farm",
+  "productName": "Phone Farm",
+  "desktopName": "phone-farm.desktop",
+  "version": "1.1.0",
+  "description": "Ferramenta de teste: emuladores de celular lado a lado para testar aplicações PWA",
+  "author": "Bruno Vieira",
+  "homepage": "https://github.com/vieiraes",
+  "license": "UNLICENSED",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "logo": "electron scripts/make-logo.js",
+    "electron:installer": "electron-builder --win --publish never",
+    "electron:installer:linux": "electron-builder --linux --publish never",
+    "electron:installer:docker": "mkdir -p tmp/docker-home && docker run --rm -e HOME=/project/tmp/docker-home -e ELECTRON_CACHE=/cache/electron -e ELECTRON_BUILDER_CACHE=/cache/electron-builder -v \"$PWD\":/project -v \"${XDG_CACHE_HOME:-$HOME/.cache}\":/cache -u \"$(id -u):$(id -g)\" -w /project electronuserland/builder:wine npx electron-builder --win --publish never",
+    "release": "npm run electron:installer:linux && npm run electron:installer:docker"
+  },
+  "build": {
+    "appId": "dev.bvieira.phonefarm",
+    "productName": "Phone Farm",
+    "copyright": "Bruno Vieira",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "app-preload.js",
+      "devices.js",
+      "renderer/**",
+      "build/icon.png"
+    ],
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Development",
+      "icon": "build/icons",
+      "maintainer": "Bruno Vieira <vieira.es@gmail.com>",
+      "synopsis": "Emuladores de celular para testar PWAs",
+      "syncDesktopName": true,
+      "artifactName": "Phone-Farm-${version}.${ext}"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Phone Farm",
+      "artifactName": "Phone-Farm-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "Phone-Farm-Portable-${version}.${ext}"
+    }
+  },
+  "devDependencies": {
+    "electron": "45.0.0",
+    "electron-builder": "26.15.3"
+  }
+}

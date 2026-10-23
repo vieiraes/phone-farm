@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src * data:; style-src 'self' 'unsafe-inline'">
+  <title>Phone Farm</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="toolbar">
+    <div class="brand">
+      <img src="logo.svg" alt="" class="brand-logo">
+      <div>
+        <strong>Phone Farm</strong>
+        <span class="brand-sub">Ferramenta de teste · celulares para PWAs</span>
+      </div>
+    </div>
+
+    <div class="group" title="Escolha o modelo e adicione um celular à tela">
+      <select id="device-select" aria-label="Modelo do celular"></select>
+      <button id="add-phone" class="btn primary" data-icon="smartphone">Adicionar celular</button>
+    </div>
+
+    <form class="group url-field" id="add-app-form">
+      <span class="field">
+        <i data-icon="link"></i>
+        <input id="app-url" type="text" placeholder="URL do PWA (ex.: localhost:5173)" spellcheck="false" aria-label="URL do PWA">
+      </span>
+      <button type="submit" class="btn" data-icon="plus">Adicionar app</button>
+    </form>
+
+    <div class="spacer"></div>
+
+    <label class="group chip" title="Zoom dos celulares">
+      <i data-icon="zoom"></i>
+      <input id="zoom" type="range" min="0.4" max="1" step="0.05" aria-label="Zoom">
+      <span id="zoom-label" class="num"></span>
+    </label>
+    <label class="group chip" title="Como abrir um app na tela inicial">
+      <i data-icon="pointer"></i>
+      <select id="open-on" aria-label="Abrir app com">
+        <option value="click">1 toque</option>
+        <option value="dblclick">2 cliques</option>
+      </select>
+    </label>
+    <span class="chip memory" id="memory" title="Memória total do Phone Farm (todos os processos)"><i data-icon="activity"></i><span></span></span>
+    <button id="about" class="btn icon-only" data-icon="info" title="Sobre o Phone Farm" aria-label="Sobre o Phone Farm"></button>
+    <button id="remove-all" class="btn danger" data-icon="trash" title="Remover ou limpar todos os celulares de uma vez">Remover todos</button>
+  </header>
+
+  <div class="toast" id="status" role="status" aria-live="polite"></div>
+  <main id="grid"></main>
+  <script src="app.js"></script>
+</body>
+</html>
